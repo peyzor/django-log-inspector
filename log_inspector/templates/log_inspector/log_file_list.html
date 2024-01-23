@@ -1,0 +1,24 @@
+{% load static i18n %}
+
+
+<tbody id="log-files-data" class="w-full">
+{% if filenames %}
+    {% for filename in filenames %}
+        <tr class="hover:bg-gray-100">
+            <td class="w-full cursor-pointer break-all"
+                hx-get="{% url 'log_inspector:file_log_entries' filename=filename %}"
+                hx-trigger="click"
+                hx-target="#log-entries-data"
+                hx-swap="outerHTML"
+                @click="updateFileName($event); isFileSelected = true">
+                {{ filename }}
+            </td>
+        </tr>
+    {% endfor %}
+
+{% else %}
+    <tr class="hover:bg-gray-100">
+        <td class="w-full" colspan="2">{% trans 'No entries!' %}</td>
+    </tr>
+{% endif %}
+</tbody>

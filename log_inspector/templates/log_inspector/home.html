@@ -1,0 +1,151 @@
+{% extends 'admin/base_site.html' %}
+{% load static i18n %}
+{% block title %}{% trans 'Django Log Viewer' %} - {{ block.super }}{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+        <a href="{% url 'log_inspector:home' %}">
+            {% if custom_title %}
+                {{ custom_title }}
+            {% else %}
+                {% trans 'Django Log Viewer' %}
+            {% endif %}
+        </a>
+    </div>
+{% endblock %}
+
+{% block dark-mode-vars %}
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'log_inspector/css/output.css' %}">
+
+    {% if custom_style_file %}
+        <link type="text/css" href="{{ custom_style_file }}" rel="stylesheet">
+    {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="{% static 'log_inspector/js/htmx.min.js' %}" defer></script>
+    <script src="{% static 'log_inspector/js/alpinejs.min.js' %}" defer></script>
+    <script src="https://kit.fontawesome.com/7773a61110.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+    <div x-data="{ live: false, isFileSelected: false }" class="p-4 mx-auto">
+        <div class="flex">
+            <div class="flex-none w-9/12 bg-white shadow-md p-6">
+                <div class="mb-6">
+                    <h1 class="text-3xl font-bold">
+                        {% if custom_file_list_title %}
+                            {{ custom_file_list_title }}
+                        {% else %}
+                            {% trans 'Django Log Viewer' %}
+                        {% endif %}
+                    </h1>
+                </div>
+
+                <div class="space-x-2">
+                    <button id="live-button"
+                            class="bg-blue-500 text-white px-4 py-2 rounded"
+                            hx-target="#log-entries-table"
+                            hx-trigger="click"
+                            hx-swap="outerHTML"
+                            @click="live = !live"
+                            x-show="!live && isFileSelected">
+                        {% trans 'Live' %}
+                    </button>
+                    <button id="stop-button"
+                            class="bg-red-500 text-white px-4 py-2 rounded"
+                            hx-target="#log-entries-table"
+                            hx-trigger="click"
+                            hx-swap="outerHTML"
+                            @click="live = !live"
+                            x-show="live && isFileSelected">
+                        {% trans 'Stop' %}
+                    </button>
+                    <a id="download-link">
+                        <button id="download-button"
+                                class="bg-green-500 text-white px-4 py-2 rounded"
+                                x-show="isFileSelected">
+                            {% trans 'Download' %}
+                        </button>
+                    </a>
+                </div>
+
+                <table id="log-entries-table"
+                       class="mt-6 w-full border-collapse">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="border p-2">{% trans 'No.' %}</th>
+                        <th scope="col" class="border p-2">{% trans 'Log entries' %}</th>
+                    </tr>
+                    </thead>
+                    <tbody id="log-entries-data">
+                    <tr>
+                        <td colspan="2" class="border p-2">{% trans 'No entries!' %}</td>
+                    </tr>
+                    </tbody>
+
+                    <tfoot id="log-entries-footer">
+                    <tfoot/>
+                </table>
+            </div>
+
+            <div class="flex-none w-3/12 ml-6 bg-white shadow-md p-6">
+                <h2 class="pl-1 pr-2 py-3 text-2xl font-bold">{% trans 'Log Files' %}</h2>
+                <input class="w-full py-2 px-4 border-2 border-gray-300 rounded-md focus:outline-none
+                              focus:border-blue-500 transition duration-300"
+                       type="search"
+                       name="search"
+                       placeholder="{% trans 'Search...' %}"
+                       hx-get="{% url 'log_inspector:log_files' %}"
+                       hx-trigger="input changed delay:300ms, search"
+                       hx-target="#log-files-data"
+                       hx-swap="outerHTML">
+
+                <table id="log-files-table"
+                       class="w-full border-collapse mt-2"
+                       hx-get="{% url 'log_inspector:log_files' %}"
+                       hx-trigger="load"
+                       hx-target="#log-files-data"
+                       hx-swap="outerHTML">
+
+                    <tbody id="log-files-data">
+                    <tr>
+                        <td colspan="2" class="border p-2 w-full">{% trans 'No entries!' %}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateFileName(event) {
+            const td = event.target;
+            const fileName = td.textContent.trim();
+
+            const liveButton = document.getElementById('live-button');
+            const stopButton = document.getElementById('stop-button');
+            const downloadLink = document.getElementById('download-link');
+            liveButton.setAttribute('hx-get', `/logs/start-live/${fileName}/`)
+            stopButton.setAttribute('hx-get', `/logs/stop-live/${fileName}/`)
+            downloadLink.setAttribute('href', `/logs/download/${fileName}/`)
+
+            htmx.process(document.body)
+        }
+
+        function copyText(event) {
+            const logEntryDiv = event.target.parentNode.previousElementSibling
+            const textToCopy = logEntryDiv.textContent.trim();
+
+            navigator.clipboard.writeText(textToCopy);
+
+            Alpine.store('copiedValue', textToCopy);
+        }
+    </script>
+{% endblock %}
