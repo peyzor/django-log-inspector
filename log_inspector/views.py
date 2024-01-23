@@ -13,6 +13,8 @@ from django.views.generic import TemplateView as _TemplateView
 from . import settings
 from .utils import get_log_entries, get_log_file_names
 
+HTMX_STOP_POLLING = 286
+
 
 class TemplateView(_TemplateView):
     @method_decorator(login_required)
@@ -77,9 +79,8 @@ class StartLiveView(TemplateView):
 
 class StopLiveView(TemplateView):
     def get(self, request, filename, *args, **kwargs):
-        htmx_stop_polling = 286
         context = {'filename': filename}
-        return render(request, 'log_inspector/stop_live.html', context=context, status=htmx_stop_polling)
+        return render(request, 'log_inspector/stop_live.html', context=context, status=HTMX_STOP_POLLING)
 
 
 class DownloadLogFileView(TemplateView):

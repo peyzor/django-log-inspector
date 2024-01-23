@@ -1,6 +1,6 @@
 {% extends 'admin/base_site.html' %}
 {% load static i18n %}
-{% block title %}{% trans 'Django Log Viewer' %} - {{ block.super }}{% endblock %}
+{% block title %}{% trans 'Django Log Inspector' %} - {{ block.super }}{% endblock %}
 
 {% block breadcrumbs %}
     <div class="breadcrumbs">
@@ -9,7 +9,7 @@
             {% if custom_title %}
                 {{ custom_title }}
             {% else %}
-                {% trans 'Django Log Viewer' %}
+                {% trans 'Django Log Inspector' %}
             {% endif %}
         </a>
     </div>
@@ -43,7 +43,7 @@
                         {% if custom_file_list_title %}
                             {{ custom_file_list_title }}
                         {% else %}
-                            {% trans 'Django Log Viewer' %}
+                            {% trans 'Django Log Inspector' %}
                         {% endif %}
                     </h1>
                 </div>
