@@ -54,6 +54,7 @@ class FileLogEntryListView(TemplateView):
             raise Http404
 
         log_entries = get_log_entries(filename)
+        log_entries = [entry for entry in log_entries if entry]
 
         max_lines = 1000
         paginator = Paginator(list(islice(log_entries, max_lines)), 20)
