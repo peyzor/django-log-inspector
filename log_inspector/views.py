@@ -48,7 +48,7 @@ class LogFileListView(TemplateView):
         return render(request, 'log_inspector/log_file_list.html', context=context)
 
 
-class FileLogEntryListView(TemplateView):
+class LogEntriesView(TemplateView):
     def get(self, request, filename, *args, **kwargs):
         if filename not in get_log_file_names(settings.LOG_INSPECTOR_FILES_DIR):
             raise Http404
