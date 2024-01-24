@@ -31,7 +31,7 @@ class HomeView(TemplateView):
         return render(request, 'log_inspector/home.html', context=context)
 
 
-class LogFileListView(TemplateView):
+class LogFilesView(TemplateView):
     def get(self, request, *args, **kwargs):
         search = request.GET.get('search', '')
 
@@ -45,7 +45,7 @@ class LogFileListView(TemplateView):
             filenames.append(fn)
 
         context = {'filenames': filenames}
-        return render(request, 'log_inspector/log_file_list.html', context=context)
+        return render(request, 'log_inspector/log_files.html', context=context)
 
 
 class LogEntriesView(TemplateView):
@@ -69,7 +69,7 @@ class LogEntriesView(TemplateView):
             log_entries = paginator.page(paginator.num_pages)
 
         context = {'log_entries': log_entries, 'filename': filename}
-        return render(request, 'log_inspector/file_log_entry_list.html', context)
+        return render(request, 'log_inspector/log_entries.html', context)
 
 
 class StartLiveView(TemplateView):
