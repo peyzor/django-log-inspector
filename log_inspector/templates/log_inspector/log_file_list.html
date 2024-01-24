@@ -6,7 +6,7 @@
     {% for filename in filenames %}
         <tr class="hover:bg-gray-100">
             <td class="w-full cursor-pointer break-all"
-                hx-get="{% url 'log_inspector:file_log_entries' filename=filename %}"
+                hx-get="{% url 'log_inspector:log_entries' filename=filename %}"
                 hx-trigger="click"
                 hx-target="#log-entries-data"
                 hx-swap="outerHTML"
