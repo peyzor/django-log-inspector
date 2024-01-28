@@ -39,21 +39,10 @@
         <div class="flex">
             <div class="flex-none w-9/12 bg-white shadow-md p-6">
                 <div class="mb-6">
-
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" value="" class="sr-only peer">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4
-                                    peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer
-                                    dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full
-                                    peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px]
-                                    after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all
-                                    dark:border-gray-600 peer-checked:bg-blue-600"
-                             @click="$store.darkMode.toggle()">
-                        </div>
-                        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                            {% trans 'Dark Mode' %}
-                        </span>
-                    </label>
+                    <button class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                            @click="$store.darkMode.toggle()">
+                        {% trans 'Dark Mode' %}
+                    </button>
 
                     <h1 id="log-entries-title"
                         class="text-3xl font-bold">
@@ -111,7 +100,7 @@
             <div class="flex-none w-3/12 ml-6 bg-white shadow-md p-6">
                 <h2 class="pl-1 pr-2 py-3 text-2xl font-bold">{% trans 'Log Files' %}</h2>
                 <input class="w-full py-2 px-4 border-2 border-gray-300 rounded-md focus:outline-none
-                              focus:border-blue-500 transition duration-300"
+                              focus:border-blue-500 transition duration-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                        type="search"
                        name="search"
                        placeholder="{% trans 'Search...' %}"
