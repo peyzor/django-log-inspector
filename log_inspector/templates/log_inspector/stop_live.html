@@ -2,7 +2,7 @@
 
 <table id="log-entries-table"
        class="mt-6 w-full border-collapse"
-       hx-get="{% url 'log_inspector:log_entries' filename=filename %}"
+       hx-get="{% url 'log_inspector:log_entries' filename=filename %}?partial=true"
        hx-trigger="load"
        hx-target="#log-entries-data"
        hx-swap="outerHTML">

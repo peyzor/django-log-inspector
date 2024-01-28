@@ -8,9 +8,9 @@
             <td class="w-full cursor-pointer break-all"
                 hx-get="{% url 'log_inspector:log_entries' filename=filename %}"
                 hx-trigger="click"
-                hx-target="#log-entries-data"
+                hx-target="#log-entries-table"
                 hx-swap="outerHTML"
-                @click="updateFileName($event); isFileSelected = true">
+                @click="updateFileName($event); isFileSelected = true; live=false">
                 {{ filename }}
             </td>
         </tr>

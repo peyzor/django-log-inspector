@@ -60,6 +60,7 @@ class LogEntriesView(TemplateView):
         paginator = Paginator(list(islice(log_entries, max_lines)), 20)
 
         page = request.GET.get('page', 1)
+        partial = request.GET.get('partial', False)
 
         try:
             log_entries = paginator.page(page)
@@ -69,7 +70,10 @@ class LogEntriesView(TemplateView):
             log_entries = paginator.page(paginator.num_pages)
 
         context = {'log_entries': log_entries, 'filename': filename}
-        return render(request, 'log_inspector/log_entries.html', context)
+        if partial:
+            return render(request, 'log_inspector/log_entries.html', context)
+
+        return render(request, 'log_inspector/log_entries_table.html', context, status=HTMX_STOP_POLLING)
 
 
 class StartLiveView(TemplateView):

@@ -39,6 +39,11 @@
         <div class="flex">
             <div class="flex-none w-9/12 bg-white shadow-md p-6">
                 <div class="mb-6">
+                    <button class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                            @click="$store.darkMode.toggle()">
+                        {% trans 'Dark Mode' %}
+                    </button>
+
                     <h1 id="log-entries-title"
                         class="text-3xl font-bold">
                         {% trans 'Django Log Inspector' %}
@@ -95,7 +100,7 @@
             <div class="flex-none w-3/12 ml-6 bg-white shadow-md p-6">
                 <h2 class="pl-1 pr-2 py-3 text-2xl font-bold">{% trans 'Log Files' %}</h2>
                 <input class="w-full py-2 px-4 border-2 border-gray-300 rounded-md focus:outline-none
-                              focus:border-blue-500 transition duration-300"
+                              focus:border-blue-500 transition duration-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                        type="search"
                        name="search"
                        placeholder="{% trans 'Search...' %}"
@@ -110,7 +115,6 @@
                        hx-trigger="load"
                        hx-target="#log-files-data"
                        hx-swap="outerHTML">
-
                     <tbody id="log-files-data">
                     <tr>
                         <td colspan="2" class="border p-2 w-full">{% trans 'No entries!' %}</td>
@@ -122,6 +126,21 @@
     </div>
 
     <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('darkMode', {
+                on: window.matchMedia('(prefers-color-scheme: dark)').matches,
+
+                init() {
+                    document.documentElement.classList.toggle('dark', this.on);
+                },
+
+                toggle() {
+                    this.on = !this.on;
+                    document.documentElement.classList.toggle('dark', this.on);
+                }
+            })
+        })
+
         function updateFileName(event) {
             const td = event.target;
             const fileName = td.textContent.trim();
