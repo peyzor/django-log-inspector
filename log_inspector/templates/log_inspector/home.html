@@ -82,7 +82,7 @@
                            type="search"
                            name="search"
                            placeholder="{% trans 'Search...' %}"
-                           hx-target="#log-entries-data"
+                           hx-target="#log-entries-table"
                            hx-trigger="input changed delay:300ms, search"
                            hx-swap="outerHTML"
                            x-show="!live && isFileSelected">
@@ -157,10 +157,12 @@
 
             const liveButton = document.getElementById('live-button');
             const stopButton = document.getElementById('stop-button');
+            const searchBox = document.getElementById('search-box');
             const downloadLink = document.getElementById('download-link');
             const logEntriesTitle = document.getElementById('log-entries-title')
             liveButton.setAttribute('hx-get', `/logs/start-live/${fileName}/`)
             stopButton.setAttribute('hx-get', `/logs/stop-live/${fileName}/`)
+            searchBox.setAttribute('hx-get', `/logs/log-entries/${fileName}/`)
             downloadLink.setAttribute('href', `/logs/download/${fileName}/`)
             logEntriesTitle.innerText = fileName
 
