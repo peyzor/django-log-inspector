@@ -1,7 +1,6 @@
 import os
 import re
 from fnmatch import fnmatch
-from itertools import islice
 from os.path import isfile
 
 from . import settings
@@ -37,7 +36,7 @@ def reverse_readlines(file, exclude=None):
 def get_log_entries(filename):
     file_log = os.path.join(settings.LOG_INSPECTOR_FILES_DIR, filename)
     with open(file_log, encoding='utf8', errors='ignore') as file:
-        yield from islice(reverse_readlines(file, exclude=settings.LOG_INSPECTOR_EXCLUDE_TEXT_PATTERN), 1000)
+        yield from reverse_readlines(file, exclude=settings.LOG_INSPECTOR_EXCLUDE_TEXT_PATTERN)
 
 
 def get_log_file_names(directory):
