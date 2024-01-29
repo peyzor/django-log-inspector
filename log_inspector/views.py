@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView as _TemplateView
 
 from . import settings
-from .utils import get_log_entries, get_log_file_names
+from .utils import get_log_entries, get_log_file_names, filter_log_entries
 
 HTMX_STOP_POLLING = 286
 
@@ -56,8 +56,7 @@ class LogEntriesView(TemplateView):
         search = request.GET.get('search', '')
 
         log_entries = get_log_entries(filename)
-        log_entries = [entry for entry in log_entries if entry]
-        log_entries = [entry for entry in log_entries if not search or search.lower() in entry.lower()]
+        log_entries = filter_log_entries(log_entries, search)
 
         max_lines = 1000
         paginator = Paginator(list(islice(log_entries, max_lines)), 20)

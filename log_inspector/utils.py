@@ -50,3 +50,14 @@ def get_log_file_names(directory):
                 filenames.append(entry.name)
 
     return filenames
+
+
+def filter_log_entries(log_entries, search):
+    for entry in log_entries:
+        if not entry:
+            continue
+
+        if search and search.lower() not in entry.lower():
+            continue
+
+        yield entry
