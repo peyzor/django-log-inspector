@@ -37,9 +37,7 @@ def reverse_readlines(file, exclude=None):
 def get_log_entries(filename):
     file_log = os.path.join(settings.LOG_INSPECTOR_FILES_DIR, filename)
     with open(file_log, encoding='utf8', errors='ignore') as file:
-        log_entries = list(islice(reverse_readlines(file, exclude=settings.LOG_INSPECTOR_EXCLUDE_TEXT_PATTERN), 1000))
-
-    return log_entries
+        yield from islice(reverse_readlines(file, exclude=settings.LOG_INSPECTOR_EXCLUDE_TEXT_PATTERN), 1000)
 
 
 def get_log_file_names(directory):
