@@ -56,6 +56,7 @@ class LogEntriesView(TemplateView):
         search = request.GET.get('search', '')
 
         log_entries = get_log_entries(filename)
+        log_entries = [entry for entry in log_entries if entry]
         log_entries = [entry for entry in log_entries if not search or search.lower() in entry.lower()]
 
         max_lines = 1000
