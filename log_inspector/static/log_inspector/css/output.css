@@ -568,6 +568,10 @@ video {
   z-index: 20;
 }
 
+.float-right {
+  float: right;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -585,6 +589,10 @@ video {
   margin-inline-start: 0.75rem;
 }
 
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -595,6 +603,10 @@ video {
 
 .mt-6 {
   margin-top: 1.5rem;
+}
+
+.box-border {
+  box-sizing: border-box;
 }
 
 .block {
@@ -609,8 +621,16 @@ video {
   display: table;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
 .w-3\/12 {
   width: 25%;
+}
+
+.w-40 {
+  width: 10rem;
 }
 
 .w-9\/12 {

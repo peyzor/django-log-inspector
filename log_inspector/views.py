@@ -53,8 +53,10 @@ class LogEntriesView(TemplateView):
         if filename not in get_log_file_names(settings.LOG_INSPECTOR_FILES_DIR):
             raise Http404
 
+        search = request.GET.get('search', '')
+
         log_entries = get_log_entries(filename)
-        log_entries = [entry for entry in log_entries if entry]
+        log_entries = [entry for entry in log_entries if not search or search.lower() in entry.lower()]
 
         max_lines = 1000
         paginator = Paginator(list(islice(log_entries, max_lines)), 20)
