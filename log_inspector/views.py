@@ -54,15 +54,15 @@ class LogEntriesView(TemplateView):
             raise Http404
 
         search = request.GET.get('search', '')
+        page = request.GET.get('page', 1)
+        live = request.GET.get('live', False)
+        stop = request.GET.get('stop', False)
 
         log_entries = get_log_entries(filename)
         log_entries = filter_log_entries(log_entries, search)
 
-        max_lines = 1000
-        paginator = Paginator(list(islice(log_entries, max_lines)), 20)
-
-        page = request.GET.get('page', 1)
-        partial = request.GET.get('partial', False)
+        max_lines = settings.LOG_INSPECTOR_MAX_READ_LINES if not live else settings.LOG_INSPECTOR_PAGE_LENGTH
+        paginator = Paginator(list(islice(log_entries, max_lines)), settings.LOG_INSPECTOR_PAGE_LENGTH)
 
         try:
             log_entries = paginator.page(page)
@@ -72,7 +72,7 @@ class LogEntriesView(TemplateView):
             log_entries = paginator.page(paginator.num_pages)
 
         context = {'log_entries': log_entries, 'filename': filename}
-        if partial:
+        if live or stop:
             return render(request, 'log_inspector/log_entries.html', context)
 
         return render(request, 'log_inspector/log_entries_table.html', context, status=HTMX_STOP_POLLING)
