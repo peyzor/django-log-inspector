@@ -3,7 +3,7 @@
 {% block title %}{% trans 'Django Log Inspector' %} - {{ block.super }}{% endblock %}
 
 {% block breadcrumbs %}
-    <div class="breadcrumbs" x-data="{ darkMode: false }">
+    <div class="breadcrumbs" x-data>
         <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
         <a href="{% url 'log_inspector:home' %}">
             {% if custom_title %}
@@ -14,10 +14,14 @@
         </a>
         <i class="fa-solid fa-sun float-right focus:outline-none cursor-pointer text-2xl"
            x-show="$store.darkMode.on"
-           @click="$store.darkMode.toggle()"></i>
+           @click="$store.darkMode.toggle()">
+
+        </i>
         <i class="fa-solid fa-moon float-right focus:outline-none cursor-pointer text-2xl"
            x-show="!$store.darkMode.on"
-           @click="$store.darkMode.toggle()"></i>
+           @click="$store.darkMode.toggle()">
+
+        </i>
     </div>
 {% endblock %}
 
