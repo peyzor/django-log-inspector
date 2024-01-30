@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView as _TemplateView
 
 from . import settings
-from .utils import get_log_entries, get_log_file_names, filter_log_entries
+from .utils import get_log_entries, get_log_file_names, filter_log_entries, is_valid_filename
 
 HTMX_STOP_POLLING = 286
 
@@ -50,7 +50,7 @@ class LogFilesView(TemplateView):
 
 class LogEntriesView(TemplateView):
     def get(self, request, filename, *args, **kwargs):
-        if filename not in get_log_file_names(settings.LOG_INSPECTOR_FILES_DIR):
+        if not is_valid_filename(filename):
             raise Http404
 
         search = request.GET.get('search', '')
@@ -92,7 +92,7 @@ class StopLiveView(TemplateView):
 
 class DownloadLogFileView(TemplateView):
     def get(self, request, filename, *args, **kwargs):
-        if filename not in get_log_file_names(settings.LOG_INSPECTOR_FILES_DIR):
+        if not is_valid_filename(filename):
             raise Http404
 
         zip_buffer = io.BytesIO()

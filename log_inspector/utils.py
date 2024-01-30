@@ -61,3 +61,10 @@ def filter_log_entries(log_entries, search):
             continue
 
         yield entry
+
+
+def is_valid_filename(filename):
+    if filename not in get_log_file_names(settings.LOG_INSPECTOR_FILES_DIR):
+        return False
+
+    return True
