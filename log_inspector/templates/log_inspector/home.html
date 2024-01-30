@@ -3,7 +3,7 @@
 {% block title %}{% trans 'Django Log Inspector' %} - {{ block.super }}{% endblock %}
 
 {% block breadcrumbs %}
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" x-data>
         <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
         <a href="{% url 'log_inspector:home' %}">
             {% if custom_title %}
@@ -12,6 +12,17 @@
                 {% trans 'Django Log Inspector' %}
             {% endif %}
         </a>
+        <button
+    class="w-8 h-4 rounded-full bg-white flex items-center transition duration-300 focus:outline-none shadow float-right"
+    @click="$store.darkMode.toggle(); switchTheme()">
+    <div
+        id="switch-toggle"
+        class="w-6 h-6 relative rounded-full transition duration-500 transform bg-yellow-500 -translate-x-1 p-1 text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+    </div>
+</button>
     </div>
 {% endblock %}
 
@@ -39,11 +50,6 @@
         <div class="flex">
             <div class="flex-none w-9/12 bg-white shadow-md p-6">
                 <div class="mb-6">
-                    <button class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-                            @click="$store.darkMode.toggle()">
-                        {% trans 'Dark Mode' %}
-                    </button>
-
                     <h1 id="log-entries-title"
                         class="text-3xl font-bold">
                         {% trans 'Django Log Inspector' %}
@@ -176,6 +182,32 @@
             navigator.clipboard.writeText(textToCopy);
 
             Alpine.store('copiedValue', textToCopy);
+        }
+
+        const darkIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+</svg>`
+
+        const lightIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+</svg>`
+
+        function switchTheme() {
+            const switchToggle = document.querySelector('#switch-toggle');
+            const darkMode = Alpine.store('darkMode').on
+            if (darkMode) {
+                switchToggle.classList.remove('bg-yellow-500', '-translate-x-2')
+                switchToggle.classList.add('bg-gray-700', 'translate-x-full')
+                setTimeout(() => {
+                    switchToggle.innerHTML = darkIcon
+                }, 250);
+            } else {
+                switchToggle.classList.add('bg-yellow-500', '-translate-x-2')
+                switchToggle.classList.remove('bg-gray-700', 'translate-x-full')
+                setTimeout(() => {
+                    switchToggle.innerHTML = lightIcon
+                }, 250);
+            }
         }
     </script>
 {% endblock %}
