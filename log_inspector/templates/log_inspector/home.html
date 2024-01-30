@@ -15,12 +15,10 @@
         <i class="fa-solid fa-sun float-right focus:outline-none cursor-pointer text-2xl"
            x-show="$store.darkMode.on"
            @click="$store.darkMode.toggle()">
-
         </i>
         <i class="fa-solid fa-moon float-right focus:outline-none cursor-pointer text-2xl"
            x-show="!$store.darkMode.on"
            @click="$store.darkMode.toggle()">
-
         </i>
     </div>
 {% endblock %}
@@ -47,17 +45,17 @@
 {% block content %}
     <div x-data="{ live: false, isFileSelected: false }" class="p-4 mx-auto">
         <div class="flex">
-            <div class="flex-none w-9/12 bg-white shadow-md p-6">
+            <div class="flex-none w-9/12 bg-white shadow-md p-6 dark:bg-slate-800">
                 <div class="mb-6">
                     <h1 id="log-entries-title"
-                        class="text-3xl font-bold">
+                        class="text-3xl font-bold text-black dark:text-white">
                         {% trans 'Django Log Inspector' %}
                     </h1>
                 </div>
 
-                <div class="space-x-2">
+                <div>
                     <button id="live-button"
-                            class="bg-blue-500 text-white px-4 py-2 rounded"
+                            class="bg-blue-500 text-white px-4 py-2 rounded dark:bg-blue-700"
                             hx-target="#log-entries-table"
                             hx-trigger="click"
                             hx-swap="outerHTML"
@@ -66,7 +64,7 @@
                         {% trans 'Live' %}
                     </button>
                     <button id="stop-button"
-                            class="bg-red-500 text-white px-4 py-2 rounded"
+                            class="bg-red-500 text-white px-4 py-2 rounded dark:bg-red-700"
                             hx-target="#log-entries-table"
                             hx-trigger="click"
                             hx-swap="outerHTML"
@@ -76,14 +74,15 @@
                     </button>
                     <a id="download-link">
                         <button id="download-button"
-                                class="bg-green-500 text-white px-4 py-2 rounded"
+                                class="bg-green-500 text-white px-4 py-2 mx-2 rounded dark:bg-green-700"
                                 x-show="isFileSelected">
                             {% trans 'Download' %}
                         </button>
                     </a>
                     <input id="search-box"
                            class="py-2 px-4 mt-1 border-2 border-gray-300 rounded-md focus:outline-none
-                            focus:border-blue-500 transition duration-300 box-border h-10 w-40 float-right"
+                            focus:border-blue-500 transition duration-300 box-border h-10 w-40 float-right
+                            dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                            type="search"
                            name="search"
                            placeholder="{% trans 'Search...' %}"
@@ -94,28 +93,41 @@
                 </div>
 
                 <table id="log-entries-table"
-                       class="mt-6 w-full border-collapse">
+                       class="mt-6 w-full border-collapse dark:bg-slate-800">
                     <thead>
                     <tr>
-                        <th scope="col" class="border p-2">{% trans 'No.' %}</th>
-                        <th scope="col" class="border p-2">{% trans 'Log entries' %}</th>
+                        <th scope="col"
+                            class="border p-2 dark:border-gray-700 dark:bg-slate-700 dark:text-white dark:border-gray-700">
+                            {% trans 'No.' %}
+                        </th>
+                        <th scope="col"
+                            class="border p-2 dark:border-gray-700 dark:bg-slate-700 dark:text-white dark:border-gray-700">
+                            {% trans 'Log entries' %}
+                        </th>
                     </tr>
                     </thead>
+
                     <tbody id="log-entries-data">
+
                     <tr>
-                        <td colspan="2" class="border p-2">{% trans 'No entries!' %}</td>
+                        <td colspan="2"
+                            class="border p-2 hover:bg-gray-100 dark:hover:bg-gray-500 dark:bg-slate-700 dark:border-gray-700 dark:text-white">
+                            {% trans 'No entries!' %}
+                        </td>
                     </tr>
                     </tbody>
 
                     <tfoot id="log-entries-footer">
-                    <tfoot/>
+                    </tfoot>
                 </table>
             </div>
 
-            <div class="flex-none w-3/12 ml-6 bg-white shadow-md p-6">
-                <h2 class="pl-1 pr-2 py-3 text-2xl font-bold">{% trans 'Log Files' %}</h2>
+            <div class="flex-none w-3/12 ml-6 bg-white shadow-md p-6 dark:bg-slate-800">
+                <h2 class="pl-1 pr-2 py-3 text-2xl font-bold text-black dark:text-white">
+                    {% trans 'Log Files' %}
+                </h2>
                 <input class="w-full py-2 px-4 border-2 border-gray-300 rounded-md focus:outline-none
-                              focus:border-blue-500 transition duration-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                              focus:border-blue-500 transition duration-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                        type="search"
                        name="search"
                        placeholder="{% trans 'Search...' %}"
@@ -125,14 +137,14 @@
                        hx-swap="outerHTML">
 
                 <table id="log-files-table"
-                       class="w-full border-collapse mt-2"
+                       class="w-full border-collapse mt-2 dark:bg-slate-800"
                        hx-get="{% url 'log_inspector:log_files' %}"
                        hx-trigger="load"
                        hx-target="#log-files-data"
                        hx-swap="outerHTML">
                     <tbody id="log-files-data">
                     <tr>
-                        <td colspan="2" class="border p-2 w-full">{% trans 'No entries!' %}</td>
+                        <td colspan="2" class="border p-2 w-full dark:text-white">{% trans 'No entries!' %}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -141,6 +153,12 @@
     </div>
 
     <script>
+        const elements = document.querySelectorAll('.content');
+        elements.forEach((element) => {
+            element.classList.add('bg-white')
+            element.classList.add('dark:bg-slate-800')
+        })
+
         document.addEventListener('alpine:init', () => {
             Alpine.store('darkMode', {
                 on: window.matchMedia('(prefers-color-scheme: dark)').matches,

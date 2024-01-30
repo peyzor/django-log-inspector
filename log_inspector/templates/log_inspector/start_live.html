@@ -1,20 +1,26 @@
 {% load static i18n %}
 
 <table id="log-entries-table"
-       class="mt-6 w-full border-collapse"
+       class="mt-6 w-full border-collapse dark:bg-slate-800"
        hx-get="{% url 'log_inspector:log_entries' filename=filename %}?live=true"
        hx-trigger="load, every 1s"
        hx-target="#log-entries-data"
        hx-swap="outerHTML">
     <thead>
     <tr>
-        <th scope="col">{% trans 'No.' %}</th>
-        <th scope="col">{% trans 'Log entries' %}</th>
+        <th scope="col"
+            class="border p-2 dark:border-gray-700 dark:bg-slate-700 dark:text-white dark:border-gray-700">
+            {% trans 'No.' %}
+        </th>
+        <th scope="col"
+            class="border p-2 dark:border-gray-700 dark:bg-slate-700 dark:text-white dark:border-gray-700">
+            {% trans 'Log entries' %}
+        </th>
     </tr>
     </thead>
     <tbody id="log-entries-data">
     <tr>
-        <td colspan="2" class="border p-2">{% trans 'No entries!' %}</td>
+        <td colspan="2" class="border p-2 dark:text-white">{% trans 'No entries!' %}</td>
     </tr>
     </tbody>
 </table>
