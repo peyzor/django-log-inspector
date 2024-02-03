@@ -1,5 +1,6 @@
 import io
 import os
+import re
 import zipfile
 from itertools import islice
 
@@ -38,8 +39,10 @@ class LogFilesView(TemplateView):
         log_filenames = get_log_file_names(settings.LOG_INSPECTOR_FILES_DIR)
 
         filenames = []
+        search_regex = re.compile(search, re.IGNORECASE)
+
         for fn in log_filenames:
-            if search and search.lower() not in fn:
+            if search and not search_regex.search(fn):
                 continue
 
             filenames.append(fn)
@@ -54,12 +57,14 @@ class LogEntriesView(TemplateView):
             raise Http404
 
         search = request.GET.get('search', '')
+        search_regex = re.compile(search, re.IGNORECASE)
+
         page = request.GET.get('page', 1)
         live = request.GET.get('live', False)
         stop = request.GET.get('stop', False)
 
         log_entries = get_log_entries(filename)
-        log_entries = filter_log_entries(log_entries, search)
+        log_entries = filter_log_entries(log_entries, search, search_regex)
 
         max_lines = settings.LOG_INSPECTOR_MAX_READ_LINES if not live else settings.LOG_INSPECTOR_PAGE_LENGTH
         paginator = Paginator(list(islice(log_entries, max_lines)), settings.LOG_INSPECTOR_PAGE_LENGTH)

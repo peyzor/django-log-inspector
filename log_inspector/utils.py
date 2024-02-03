@@ -52,12 +52,13 @@ def get_log_file_names(directory):
     return filenames
 
 
-def filter_log_entries(log_entries, search):
+def filter_log_entries(log_entries, search, search_regex):
     for entry in log_entries:
         if not entry:
             continue
 
-        if search and search.lower() not in entry.lower():
+        if search and ((not search_regex and search.lower() not in entry.lower()) or (
+                search_regex and not search_regex.search(entry))):
             continue
 
         yield entry
