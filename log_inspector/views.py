@@ -36,6 +36,7 @@ class LogFilesView(TemplateView):
         search = request.GET.get('search', '')
 
         filenames = get_log_file_names(settings.LOG_INSPECTOR_FILES_DIR, search)
+        filenames.sort()
 
         context = {'filenames': filenames}
         return render(request, 'log_inspector/log_files.html', context=context)
@@ -56,6 +57,7 @@ class LogEntriesView(TemplateView):
 
         max_lines = settings.LOG_INSPECTOR_MAX_READ_LINES if not live else settings.LOG_INSPECTOR_PAGE_LENGTH
         paginator = Paginator(list(islice(log_entries, max_lines)), settings.LOG_INSPECTOR_PAGE_LENGTH)
+        start_index = (int(page) - 1) * paginator.per_page
 
         try:
             log_entries = paginator.page(page)
@@ -64,7 +66,7 @@ class LogEntriesView(TemplateView):
         except EmptyPage:
             log_entries = paginator.page(paginator.num_pages)
 
-        context = {'log_entries': log_entries, 'filename': filename}
+        context = {'log_entries': log_entries, 'filename': filename, 'start_index': start_index}
         if live or stop:
             return render(request, 'log_inspector/log_entries.html', context)
 
