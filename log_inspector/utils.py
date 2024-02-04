@@ -61,7 +61,7 @@ def get_log_file_names(directory, search=''):
     return matched_file_names
 
 
-def filter_log_entries(log_entries, search):
+def filter_log_entries(log_entries, search=''):
     for entry in log_entries:
         if not entry:
             continue
