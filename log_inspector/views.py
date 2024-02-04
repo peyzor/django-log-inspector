@@ -36,6 +36,7 @@ class LogFilesView(TemplateView):
         search = request.GET.get('search', '')
 
         filenames = get_log_file_names(settings.LOG_INSPECTOR_FILES_DIR, search)
+        filenames.sort()
 
         context = {'filenames': filenames}
         return render(request, 'log_inspector/log_files.html', context=context)
