@@ -35,14 +35,7 @@ class LogFilesView(TemplateView):
     def get(self, request, *args, **kwargs):
         search = request.GET.get('search', '')
 
-        log_filenames = get_log_file_names(settings.LOG_INSPECTOR_FILES_DIR)
-
-        filenames = []
-        for fn in log_filenames:
-            if search and search.lower() not in fn:
-                continue
-
-            filenames.append(fn)
+        filenames = get_log_file_names(settings.LOG_INSPECTOR_FILES_DIR, search)
 
         context = {'filenames': filenames}
         return render(request, 'log_inspector/log_files.html', context=context)

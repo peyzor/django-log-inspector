@@ -39,8 +39,11 @@ def get_log_entries(filename):
         yield from reverse_readlines(file, exclude=settings.LOG_INSPECTOR_EXCLUDE_TEXT_PATTERN)
 
 
-def get_log_file_names(directory):
+def get_log_file_names(directory, search=''):
     filenames = []
+    matched_file_names = []
+    search_pattern = re.compile(search, re.IGNORECASE)
+
     with os.scandir(directory) as entries:
         for entry in entries:
             matched = fnmatch(entry.name, settings.LOG_INSPECTOR_FILES_PATTERN)
@@ -49,7 +52,13 @@ def get_log_file_names(directory):
             if isfile(entry) and (matched or specified):
                 filenames.append(entry.name)
 
-    return filenames
+    for fn in filenames:
+        if search and not search_pattern.search(fn):
+            continue
+
+        matched_file_names.append(fn)
+
+    return matched_file_names
 
 
 def filter_log_entries(log_entries, search):
@@ -57,7 +66,9 @@ def filter_log_entries(log_entries, search):
         if not entry:
             continue
 
-        if search and search.lower() not in entry.lower():
+        search_pattern = re.compile(search, re.IGNORECASE)
+
+        if search and not search_pattern.search(entry):
             continue
 
         yield entry
