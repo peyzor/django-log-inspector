@@ -28,12 +28,14 @@
 
 {% else %}
     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-        <td class="border p-2 hover:bg-gray-100 dark:hover:bg-gray-500 dark:bg-slate-700 dark:border-gray-700 dark:text-white" colspan="2">{% trans 'No entries!' %}</td>
+        <td class="border p-2 hover:bg-gray-100 dark:hover:bg-gray-500 dark:bg-slate-700 dark:border-gray-700 dark:text-white"
+            colspan="2">{% trans 'No entries!' %}
+        </td>
     </tr>
 {% endif %}
 
 </tbody>
 
 <tfoot id="log-entries-footer" hx-swap-oob="true" class="dark:bg-slate-800">
-    {% include 'log_inspector/pagination.html' %}
+{% include 'log_inspector/pagination.html' %}
 </tfoot>
