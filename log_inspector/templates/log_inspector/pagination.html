@@ -1,0 +1,48 @@
+{% load static i18n %}
+
+<tr>
+    <td colspan="2" class="dark:bg-slate-800 dark:border-gray-700 dark:text-white">
+        <div class="flex items-center justify-center mt-4 dark:bg-slate-800">
+            {% if log_entries.has_previous %}
+                <span class="px-4 py-2 border border-gray-300 rounded-l cursor-pointer dark:border-gray-700"
+                      hx-get="{% url 'log_inspector:log_entries' filename=filename %}?page={{ log_entries.previous_page_number }}"
+                      hx-target="#log-entries-table"
+                      hx-swap="outerHTML">
+                {% trans 'Previous' %}
+            </span>
+            {% endif %}
+            {% for page_num in log_entries.paginator.page_range %}
+                {% if page_num == log_entries.number %}
+                    <span class="px-4 py-2 bg-blue-500 text-white rounded-md dark:bg-slate-600 dark:text-white">
+                    {{ page_num }}
+                </span>
+                {% elif page_num == 1 or page_num == log_entries.paginator.num_pages %}
+                    <span class="px-4 py-2 border border-gray-300 rounded-md cursor-pointer dark:border-gray-700"
+                          hx-get="{% url 'log_inspector:log_entries' filename=filename %}?page={{ page_num }}"
+                          hx-target="#log-entries-table"
+                          hx-swap="outerHTML">
+                    {{ page_num }}
+                </span>
+                {% elif page_num > log_entries.number|add:'-3' and page_num < log_entries.number|add:'3' %}
+                    <span class="px-4 py-2 border border-gray-300 rounded-md cursor-pointer dark:border-gray-700"
+                          hx-get="{% url 'log_inspector:log_entries' filename=filename %}?page={{ page_num }}"
+                          hx-target="#log-entries-table"
+                          hx-swap="outerHTML">
+                    {{ page_num }}
+                </span>
+                {% elif page_num == log_entries.number|add:'-3' or page_num == log_entries.number|add:'3' %}
+                    <span class="px-4 py-2 dark:border-gray-700">...</span>
+                {% endif %}
+            {% endfor %}
+
+            {% if log_entries.has_next %}
+                <span class="px-4 py-2 border border-gray-300 rounded-r cursor-pointer dark:border-gray-700"
+                      hx-get="{% url 'log_inspector:log_entries' filename=filename %}?page={{ log_entries.next_page_number }}"
+                      hx-target="#log-entries-table"
+                      hx-swap="outerHTML">
+                {% trans 'Next' %}
+            </span>
+            {% endif %}
+        </div>
+    </td>
+</tr>
