@@ -189,7 +189,6 @@
         })
 
         document.addEventListener('htmx:configRequest', function (event) {
-            console.log(event.target)
             const spinner = document.getElementById('spinner');
             if (event.target.id === 'log-entries-table') {
                 spinner.style.display = 'none';
@@ -199,7 +198,6 @@
         });
 
         document.addEventListener('htmx:afterRequest', function (event) {
-            console.log(event)
             const spinner = document.getElementById('spinner');
             spinner.style.display = 'none';
         })
