@@ -43,6 +43,19 @@
 {% endblock %}
 
 {% block content %}
+    <div class="loading-spinner" id="spinner">
+        <div class="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
     <div x-data="{ live: false, isFileSelected: false }" class="p-4 mx-auto">
         <div class="flex">
             <div class="flex-none w-9/12 bg-white shadow-md p-6 dark:bg-slate-800">
@@ -144,7 +157,8 @@
                        hx-swap="outerHTML">
                     <tbody id="log-files-data">
                     <tr>
-                        <td colspan="2" class="border p-2 hover:bg-gray-100 dark:hover:bg-gray-500 dark:bg-slate-700 dark:border-gray-700 dark:text-white">{% trans 'No entries!' %}</td>
+                        <td colspan="2"
+                            class="border p-2 hover:bg-gray-100 dark:hover:bg-gray-500 dark:bg-slate-700 dark:border-gray-700 dark:text-white">{% trans 'No entries!' %}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -172,6 +186,22 @@
                     document.documentElement.classList.toggle('dark', this.on);
                 }
             })
+        })
+
+        document.addEventListener('htmx:configRequest', function (event) {
+            console.log(event.target)
+            const spinner = document.getElementById('spinner');
+            if (event.target.id === 'log-entries-table') {
+                spinner.style.display = 'none';
+            } else {
+                spinner.style.display = 'flex';
+            }
+        });
+
+        document.addEventListener('htmx:afterRequest', function (event) {
+            console.log(event)
+            const spinner = document.getElementById('spinner');
+            spinner.style.display = 'none';
         })
 
         function updateFileName(event) {
