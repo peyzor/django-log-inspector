@@ -190,7 +190,7 @@
 
         document.addEventListener('htmx:configRequest', function (event) {
             const spinner = document.getElementById('spinner');
-            if (event.target.id === 'log-entries-table') {
+            if (event.detail.headers['X-ACTION'] === 'LIVE') {
                 spinner.style.display = 'none';
             } else {
                 spinner.style.display = 'flex';

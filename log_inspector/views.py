@@ -49,8 +49,9 @@ class LogEntriesView(TemplateView):
 
         search = request.GET.get('search', '')
         page = request.GET.get('page', 1)
-        live = request.GET.get('live', False)
-        stop = request.GET.get('stop', False)
+        action = request.META.get('HTTP_X_ACTION')
+        live = action == 'LIVE'
+        stop = action == 'STOP'
 
         log_entries = get_log_entries(filename)
         log_entries = filter_log_entries(log_entries, search)
