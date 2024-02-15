@@ -49,14 +49,14 @@ class LogEntriesView(TemplateView):
 
         search = request.GET.get('search', '')
         page = request.GET.get('page', 1)
-        action = request.META.get('HTTP_X_ACTION')
-        live = action == 'LIVE'
-        stop = action == 'STOP'
+        live_action = request.META.get('HTTP_X_LIVE_ACTION')
+        is_start_live = live_action == 'START'
+        is_stop_live = live_action == 'STOP'
 
         log_entries = get_log_entries(filename)
         log_entries = filter_log_entries(log_entries, search)
 
-        max_lines = settings.LOG_INSPECTOR_MAX_READ_LINES if not live else settings.LOG_INSPECTOR_PAGE_LENGTH
+        max_lines = settings.LOG_INSPECTOR_MAX_READ_LINES if not is_start_live else settings.LOG_INSPECTOR_PAGE_LENGTH
         paginator = Paginator(list(islice(log_entries, max_lines)), settings.LOG_INSPECTOR_PAGE_LENGTH)
         start_index = (int(page) - 1) * paginator.per_page
 
@@ -68,7 +68,7 @@ class LogEntriesView(TemplateView):
             log_entries = paginator.page(paginator.num_pages)
 
         context = {'log_entries': log_entries, 'filename': filename, 'start_index': start_index}
-        if live or stop:
+        if is_start_live or is_stop_live:
             return render(request, 'log_inspector/log_entries.html', context)
 
         return render(request, 'log_inspector/log_entries_table.html', context, status=HTMX_STOP_POLLING)
