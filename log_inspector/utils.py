@@ -39,7 +39,7 @@ def reverse_readlines(file, buf_size=8192, exclude=None):
             log.append(line)
 
             if any([line.startswith(p) for p in patterns]):
-                log_text = ''.join(log[::-1])
+                log_text = '\n'.join(log[::-1])
 
                 if exclude and re.search(exclude, log_text):
                     continue
