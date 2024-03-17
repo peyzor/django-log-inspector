@@ -837,6 +837,10 @@ body {
   overflow-y: scroll !important;
 }
 
+.log-entry-text {
+  white-space: pre-wrap;
+}
+
 .lds-roller {
   display: inline-block;
   position: relative;
