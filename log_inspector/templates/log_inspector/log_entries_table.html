@@ -22,7 +22,7 @@
                 <td class="border p-2 relative break-words dark:border-gray-700 dark:text-white">
                     <div class="flex items-center">
                         <div class="flex-grow min-w-0">
-                            {{ log_entry|linebreaksbr }}
+                            {{ log_entry }}
                         </div>
                         <div x-data="{ showMsg: false }">
                             <i @click="copyText($event); showMsg = true; setTimeout(() => showMsg = false, 2000)"
