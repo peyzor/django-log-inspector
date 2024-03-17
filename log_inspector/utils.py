@@ -39,11 +39,12 @@ def reverse_readlines(file, buf_size=8192, exclude=None):
             log.append(line)
 
             if any([line.startswith(p) for p in patterns]):
-                if exclude and re.search(exclude, line).group(0):
-                    yield '*' * len(log)
+                log_text = ''.join(log[::-1])
+
+                if exclude and re.search(exclude, log_text):
                     continue
 
-                yield ''.join(log[::-1])
+                yield log_text
                 log.clear()
 
     if segment is not None:
