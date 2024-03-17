@@ -6,31 +6,48 @@ from os.path import isfile
 from . import settings
 
 
-def reverse_readlines(file, exclude=None):
+def reverse_readlines(file, buf_size=8192, exclude=None):
     patterns = settings.LOG_INSPECTOR_PATTERNS
-    reversed_patterns = [x[::-1] for x in patterns]
 
+    segment = None
+    offset = 0
     file.seek(0, os.SEEK_END)
-    position = file.tell()
-    line = ""
+    file_size = remaining_size = file.tell()
 
-    while position >= 0:
-        file.seek(position)
-        next_char = file.read(1)
+    while remaining_size > 0:
+        offset = min(file_size, offset + buf_size)
+        file.seek(file_size - offset)
 
-        if next_char == "\n" and line:
-            if any([line.endswith(p) for p in reversed_patterns]):
-                if exclude and re.search(exclude, line[::-1]).group(0):
-                    line = ""
-                else:
-                    yield line[::-1]
-                    line = ""
-        else:
-            line += next_char
+        buffer = file.read(min(remaining_size, buf_size))
 
-        position -= 1
+        # remove the file's last "\n" if it exists, only for the first buffer
+        if remaining_size == file_size and buffer[-1] == '\n':
+            buffer = buffer[:-1]
 
-    yield line[::-1]
+        remaining_size -= buf_size
+        lines = buffer.split('\n')
+
+        # append last chunk's segment to this chunk's last line
+        if segment is not None:
+            lines[-1] += segment
+
+        segment = lines[0]
+        lines = lines[1:]
+
+        log = []
+        for line in reversed(lines):
+            log.append(line)
+
+            if any([line.startswith(p) for p in patterns]):
+                if exclude and re.search(exclude, line).group(0):
+                    yield '*' * len(log)
+                    continue
+
+                yield ''.join(log[::-1])
+                log.clear()
+
+    if segment is not None:
+        yield segment
 
 
 def get_log_entries(filename):
