@@ -3,7 +3,7 @@
 <table id="log-entries-table"
        class="mt-6 w-full border-collapse dark:bg-slate-800"
        hx-get="{% url 'log_inspector:log_entries' filename=filename %}"
-       hx-headers='{"X-LIVE-ACTION": "START"}'
+       hx-headers='{"X-ACTION": "LIVE"}'
        hx-trigger="load, every 1s"
        hx-target="#log-entries-data"
        hx-swap="outerHTML">
