@@ -4,8 +4,10 @@ authors = [
     { name = "Peyman Hassani", email = "hassani.peyman627@gmail.com" },
     { name = "Shaghayegh Valadkhani", email = "valadkhani.sh@gmail.com" },
 ]
-version = "0.0.2"
-description = "Coming Soon!"
+version = "0.0.3"
+description = "Read and Download log files"
+readme = "README.md"
+license = {file = "LICENSE"}
 
 [project.urls]
 Homepage = "https://github.com/peyzor/django-log-inspector"
