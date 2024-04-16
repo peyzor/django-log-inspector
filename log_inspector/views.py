@@ -68,7 +68,7 @@ class LogEntriesView(TemplateView):
 
         context = {'log_entries': log_entries, 'filename': filename, 'start_index': start_index}
         if is_live_action:
-            return render(request, 'log_inspector/log_entries.html', context)
+            return render(request, 'log_inspector/log_entries_data.html', context)
 
         return render(request, 'log_inspector/log_entries_table.html', context, status=HTMX_STOP_POLLING)
 
