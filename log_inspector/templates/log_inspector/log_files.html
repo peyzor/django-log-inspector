@@ -4,8 +4,8 @@
 <tbody id="log-files-data" class="w-full dark:bg-slate-800">
 {% if filenames %}
     {% for filename in filenames %}
-        <tr class="hover:bg-gray-100 dark::bg-gray-500 dark:bg-slate-700 dark:text-white dark:border-gray-700">
-            <td class="w-full cursor-pointer break-all dark:text-white"
+        <tr class="hover:bg-gray-100 dark::bg-gray-500 dark:bg-slate-700 dark:text-white">
+            <td class="w-full cursor-pointer break-all dark:text-white dark:border-gray-100/50"
                 hx-get="{% url 'log_inspector:log_entries' filename=filename %}"
                 hx-trigger="click"
                 hx-target="#log-entries-table"
@@ -16,8 +16,8 @@
         </tr>
     {% endfor %}
 {% else %}
-    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-        <td class="w-full border p-2 dark:border-gray-700 dark:bg-slate-700 dark:text-white dark:border-gray-700"
+    <tr class="hover:bg-gray-100 dark::bg-gray-500 dark:bg-slate-700 dark:text-white dark:border-gray-100/50">
+        <td class="w-full cursor-pointer break-all dark:text-white"
             colspan="2">
             {% trans 'No entries!' %}
         </td>
