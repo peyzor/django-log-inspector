@@ -4,9 +4,9 @@
 {% if log_entries %}
 
     {% for log_entry in log_entries %}
-        <tr class="hover:bg-gray-100 dark:hover:bg-gray-500 dark:bg-slate-700 dark:text-white dark:border-gray-700">
-            <td class="border p-2 dark:border-gray-700">{{ forloop.counter }}</td>
-            <td class="border p-2 relative break-words dark:border-gray-700 dark:text-white">
+        <tr class="hover:bg-gray-100 dark:hover:bg-gray-500 dark:bg-slate-700 dark:text-white">
+            <td class="p-2 dark:border-b-gray-100/50 ">{{ start_index|add:forloop.counter }}</td>
+            <td class="p-2 dark:border-b-gray-100/50 relative break-words dark:text-white">
                 <div class="flex items-center">
                     <div class="flex-grow min-w-0 mr-8">
                         <p class="log-entry-text">{{ log_entry }}</p>
@@ -28,7 +28,7 @@
     {% endfor %}
 
 {% else %}
-    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+    <tr class="hover:bg-gray-100 dark:hover:bg-gray-500">
         <td class="border p-2 hover:bg-gray-100 dark:hover:bg-gray-500 dark:bg-slate-700 dark:border-gray-700 dark:text-white"
             colspan="2">
             {% trans 'No entries!' %}
