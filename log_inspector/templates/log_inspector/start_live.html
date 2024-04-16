@@ -1,7 +1,7 @@
 {% load static i18n %}
 
 <table id="log-entries-table"
-       class="mt-6 w-full border-collapse dark:bg-slate-800"
+       class="mt-6 w-full border-collapse table-fixed dark:bg-slate-800"
        hx-get="{% url 'log_inspector:log_entries' filename=filename %}"
        hx-headers='{"X-ACTION": "LIVE"}'
        hx-trigger="load, every 1s"
@@ -10,7 +10,7 @@
     <thead>
     <tr>
         <th scope="col"
-            class="border p-2 dark:border-gray-700 dark:bg-slate-700 dark:text-white dark:border-gray-700">
+            class="border p-2 w-10 dark:border-gray-700 dark:bg-slate-700 dark:text-white dark:border-gray-700">
             {% trans 'No.' %}
         </th>
         <th scope="col"
