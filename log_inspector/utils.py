@@ -14,6 +14,7 @@ def reverse_readlines(file, buf_size=8192, exclude=None):
     file.seek(0, os.SEEK_END)
     file_size = remaining_size = file.tell()
 
+    log = []
     while remaining_size > 0:
         offset = min(file_size, offset + buf_size)
         file.seek(file_size - offset)
@@ -34,7 +35,6 @@ def reverse_readlines(file, buf_size=8192, exclude=None):
         segment = lines[0]
         lines = lines[1:]
 
-        log = []
         for line in reversed(lines):
             log.append(line)
 
