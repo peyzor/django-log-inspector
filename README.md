@@ -43,7 +43,6 @@ path('logs/', include('log_inspector.urls')),
  LOG_INSPECTOR_FILES_DIR = 'logs/'
  LOG_INSPECTOR_PAGE_LENGTH = 25       # total log lines per-page
  LOG_INSPECTOR_MAX_READ_LINES = 1000  # total log lines will be read
- LOG_INSPECTOR_FILE_LIST_MAX_ITEMS_PER_PAGE = 25 # Max log files loaded in Datatable per page
  LOG_INSPECTOR_PATTERNS = ['[INFO]', '[DEBUG]', '[WARNING]', '[ERROR]', '[CRITICAL]']
  LOG_INSPECTOR_EXCLUDE_TEXT_PATTERN = None  # String regex expression to exclude the log from line
 
