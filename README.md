@@ -2,7 +2,7 @@
 
 ## _Fast and Live view to your log files_
 
-![version](https://img.shields.io/badge/version-0.0.7-blue.svg)
+![version](https://img.shields.io/badge/version-0.0.8-blue.svg)
 [![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
 <a href="https://github.com/peyzor/django-log-inspector"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
 

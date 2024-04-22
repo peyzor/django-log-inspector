@@ -8,7 +8,7 @@ maintainers = [
     { name = "Peyman Hassani", email = "hassani.peyman627@gmail.com" },
     { name = "Shaghayegh Valadkhani", email = "valadkhani.sh@gmail.com" },
 ]
-version = "0.0.7"
+version = "0.0.8"
 description = "Read and Download log files"
 readme = "README.md"
 license = { file = "LICENSE" }
