@@ -78,3 +78,9 @@ If your login URL is different from Django's default, specify it in your setting
 ```
 LOGIN_URL = '/my-custom-admin/login/'
 ```
+
+## Static Files
+Deploy static files by running the command
+```
+python manage.py collectstatic
+```
