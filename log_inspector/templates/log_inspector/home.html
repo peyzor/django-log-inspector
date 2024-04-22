@@ -77,7 +77,7 @@
                         {% trans 'Live' %}
                     </button>
                     <button id="stop-button"
-                            class="bg-red-500 text-white px-4 py-2 rounded dark:bg-red-700"
+                            class="bg-red-500 text-white px-4 py-2 mx-1 rounded dark:bg-red-700"
                             hx-target="#log-entries-table"
                             hx-trigger="click"
                             hx-swap="outerHTML"
@@ -86,7 +86,7 @@
                         {% trans 'Stop' %}
                     </button>
                     <button id="refresh-button"
-                            class="bg-green-500 text-white px-4 py-2 rounded dark:bg-green-700"
+                            class="bg-green-500 text-white px-4 py-2 mx-1 rounded dark:bg-green-700"
                             hx-target="#log-entries-table"
                             hx-trigger="click"
                             hx-swap="outerHTML"
@@ -95,7 +95,7 @@
                     </button>
                     <a id="download-link">
                         <button id="download-button"
-                                class="bg-yellow-400 text-white px-4 py-2  rounded dark:bg-green-700"
+                                class="bg-yellow-400 text-white px-4 py-2 mx-1  rounded dark:bg-green-700"
                                 x-show="isFileSelected">
                             {% trans 'Download' %}
                         </button>
