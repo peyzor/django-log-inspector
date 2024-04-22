@@ -58,8 +58,8 @@ You must specify the patterns in which your log files start with
 How logs are displayed
 
 ```
- LOG_INSPECTOR_PAGE_LENGTH = 25             # total log lines per-page
- LOG_INSPECTOR_MAX_READ_LINES = 1000        # total log lines that are read
+ LOG_INSPECTOR_PAGE_LENGTH = 25             # total logs per-page
+ LOG_INSPECTOR_MAX_READ_LINES = 1000        # total logs that are read
  LOG_INSPECTOR_EXCLUDE_TEXT_PATTERN = None  # String regex expression to exclude the log
 ```
 
