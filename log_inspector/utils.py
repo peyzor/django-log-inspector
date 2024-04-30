@@ -79,14 +79,37 @@ def get_log_file_names(directory, search=''):
     return matched_file_names
 
 
+def is_valid_regex(regex, escape=False):
+    try:
+        if escape:
+            re.compile(re.escape(regex))
+        else:
+            re.compile(regex)
+
+        is_valid = True
+
+    except re.error:
+        is_valid = False
+
+    return is_valid
+
+
 def filter_log_entries(log_entries, search=''):
+    is_valid = is_valid_regex(regex=search)
+    is_escape_valid = is_valid_regex(regex=search, escape=True)
+
+    if is_valid:
+        regex = re.compile(search, re.IGNORECASE)
+    elif is_escape_valid:
+        regex = re.compile(re.escape(search), re.IGNORECASE)
+    else:
+        return
+
     for entry in log_entries:
         if not entry:
             continue
 
-        search_pattern = re.compile(search, re.IGNORECASE)
-
-        if search and not search_pattern.search(entry):
+        if search and not regex.search(entry):
             continue
 
         yield entry
