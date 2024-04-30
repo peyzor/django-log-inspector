@@ -66,7 +66,7 @@ class LogEntriesView(TemplateView):
         except EmptyPage:
             log_entries = paginator.page(paginator.num_pages)
 
-        context = {'log_entries': log_entries, 'filename': filename, 'start_index': start_index}
+        context = {'log_entries': log_entries, 'filename': filename, 'start_index': start_index, 'search': search}
         if is_live_action:
             return render(request, 'log_inspector/log_entries_data.html', context)
 
