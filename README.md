@@ -13,6 +13,10 @@ and troubleshooting in Django applications.
 
 Django Log Inspector is available directly from <a href="https://pypi.org/project/django-log-inspector/">PyPI</a>:
 
+## Demo
+
+https://github.com/user-attachments/assets/5dfca028-92aa-4e7d-9ef9-c8e39473338a
+
 ## Installation
 
 ```
