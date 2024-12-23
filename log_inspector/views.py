@@ -54,6 +54,10 @@ class LogEntriesView(TemplateView):
 
         log_entries = get_log_entries(filename)
         log_entries = filter_log_entries(log_entries, search)
+        try:
+            page = int(page)
+        except ValueError:
+            page = 1
 
         max_lines = settings.LOG_INSPECTOR_MAX_READ_LINES if not is_live_action else settings.LOG_INSPECTOR_PAGE_LENGTH
         paginator = Paginator(list(islice(log_entries, max_lines)), settings.LOG_INSPECTOR_PAGE_LENGTH)
